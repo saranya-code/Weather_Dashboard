@@ -1,0 +1,8 @@
+ .currentWeather div {
+    padding-top: 15px;
+    padding-bottom:15px
+}
+
+.temperature ,.humidity{
+font-size: 13px;
+}
