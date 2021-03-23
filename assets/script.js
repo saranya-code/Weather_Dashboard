@@ -7,25 +7,25 @@ $(document).ready (function(){
     var latitude;
     var longitude;
 
-
     var storedCities =  JSON.parse(localStorage.getItem('cities')) || []
 
     if(storedCities.length > 0){                       //Display Last searched city weather details
         var lastSearchCity = storedCities[storedCities.length-1]
         currrentWeather(lastSearchCity)
+        $.each(storedCities, function(index, city){
+            createCityElement(city);
+        })
     }
 
-    $.each(storedCities,function(index, value){       //Adding searched city in list
-        $(".cityList").append("<li class='list-group-item'>"+value+"</li>")
-    })
-      
-    // Event listener----Selecting city from the list
+    function createCityElement(cityName) {
+        var cityListElement = $('<li class = "list-group-item">' + cityName + '</li>');
+        cityListElement.on("click", function () { // click event when click on the list of city
+          var city = $(this).text();
+          currrentWeather(cityName)
+        });
+        $(".cityList").append(cityListElement); // appending created list to the UL in the HTML
+    }
 
-    $(".cityList li").click(function(e){             
-      var selectedCity = $(e.target).text()
-      currrentWeather(selectedCity)
-    })
-    
     //Search Button
     $("#searchButton").click(function(){              //Getting searhbox value
         var search = $("#citySearch").val()   
@@ -58,8 +58,8 @@ $(document).ready (function(){
                 })
 
                 if(!cityExist) {              //City not exist append into list
+                    createCityElement(cityName)
                     storedCities.push(cityName)
-                    $(".cityList").append("<li class='list-group-item'>"+cityName+"</li>")
                     localStorage.setItem('cities', JSON.stringify(storedCities))
                 }
 
@@ -75,7 +75,6 @@ $(document).ready (function(){
                 $("#currWeather").removeClass('d-none')
             }
         });
-
     }
 
     //function UV
@@ -97,7 +96,6 @@ $(document).ready (function(){
             } else{
                 $("#uvIndex").text(data.value).addClass("red")
             }
-
         });
     }
 
@@ -137,7 +135,6 @@ $(document).ready (function(){
         // var temperature = data.main.temp
         // temperature = (temperature - 273.15) * 1.80 + 32;
         return ((temperature - 273.15) * 1.80 + 32).toFixed(1);
-        
     }
 
 });
