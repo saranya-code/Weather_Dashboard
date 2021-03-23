@@ -3,7 +3,7 @@
 
 $(document).ready (function(){
     var APIKey = '&appid=801182514b92da3aaf2ac60d3b116bb8'
-    var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q='
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q='
     var latitude;
     var longitude;
 
@@ -80,7 +80,7 @@ $(document).ready (function(){
 
     //function UV
     function uvIndex(){
-        var url= "http://api.openweathermap.org/data/2.5/uvi?lat="+latitude+"&lon="+longitude+APIKey
+        var url= "https://api.openweathermap.org/data/2.5/uvi?lat="+latitude+"&lon="+longitude+APIKey
         //console.log(url,latitude,longitude)
         fetch(url)
         .then(function(response) { 
@@ -103,7 +103,7 @@ $(document).ready (function(){
 
     //Function forecast cards
     function foreCast(cityName){
-        var url= "http://api.openweathermap.org/data/2.5/forecast?q="+cityName+APIKey
+        var url= "https://api.openweathermap.org/data/2.5/forecast?q="+cityName+APIKey
         fetch(url)
         .then(function(response) { 
             return response.json()

@@ -5,7 +5,8 @@ A web-based dashboard built to show the current weather in a city.
 
 # Description
 
-* A web-based dashboard built to show the current weather in a city of choice and the upcoming five (5) day forecast for that city 
+* A web-based dashboard built to show the current weather in a city of choice and the upcoming five (5) 
+  day forecast for that city 
 
 * Enter in your city of choice and select search to view the current weather, temperature, humidity, 
   wind speed, and UV Index for that city at the current time. Upon the search, the dashobard will also display the  weather, temperature and humidity forecast for the next five(5) days.
@@ -42,11 +43,13 @@ A web-based dashboard built to show the current weather in a city.
 
 # Resource links:
 
-* Github repository URL : 
+* Github repository URL : https://github.com/saranya-code/Weather_Dashboard
 
-* Deployment URL : 
+* Deployment URL :  
 
 * Demo :
+
+* Screenshot :
 
  
 
@@ -75,7 +78,7 @@ A web-based dashboard built to show the current weather in a city.
 
 
 
-12.3456.toFixed(1)
+
 
 
 
