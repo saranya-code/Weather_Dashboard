@@ -64,7 +64,7 @@ $(document).ready (function(){
                 }
 
                 var temp = fahrenheit(data.main.temp)
-                $(".currCityName").html(`${data.name} ( ${moment().format('l')})  <img class="mb-2" src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" width="40" height="40" alt="Icon"/>`)
+                $(".currCityName").html(`${data.name} ( ${moment().format('l')})  <img class="mb-2" src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" width="40" height="40" alt="Icon"/>`)
                 $("#temp").text(temp)
                 $("#humidity").text(data.main.humidity)
                 $("#windSpeed").text(data.wind.speed)
@@ -124,7 +124,7 @@ $(document).ready (function(){
                 $(".forecast").append(                   // 5 days forecast card details
                 `<div class='card bg-primary text-white m-3 p-3 '>
                     <div class='card-text date font-weight-bold mb-2'>${cardDate}</div>
-                    <img class="mb-2" src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" width="40" height="40" alt="Icon"/>
+                    <img class="mb-2" src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" width="40" height="40" alt="Icon"/>
                     <div class='card-text temperature mb-2'>Temp: ${temp} °F</div>
                     <div class='card-text humidity'>Humidity: ${forecast.main.humidity}%</div>
                 </div>`)
