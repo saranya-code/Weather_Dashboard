@@ -45,11 +45,16 @@ A web-based dashboard built to show the current weather in a city.
 
 * Github repository URL : https://github.com/saranya-code/Weather_Dashboard
 
-* Deployment URL :  
-
-* Demo :
+* Deployment URL :  https://saranya-code.github.io/Weather_Dashboard/
 
 * Screenshot :
+
+    ![Webpage Screenshot](./images/mainpage.png?raw=true)
+    ![Webpage Screenshot](./images/page1.png?raw=true)
+    ![Webpage Screenshot](./images/page2.png?raw=true)
+
+
+
 
  
 
