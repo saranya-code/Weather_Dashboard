@@ -1,31 +1,35 @@
+
+//Main function starts here
+
 $(document).ready (function(){
     var APIKey = '&appid=801182514b92da3aaf2ac60d3b116bb8'
     var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q='
-    var uvUrl = 'http://api.openweathermap.org/data/2.5/uvi?lat='
-    var latitude
-    var longitude
+    var latitude;
+    var longitude;
 
 
     var storedCities =  JSON.parse(localStorage.getItem('cities')) || []
 
-    if(storedCities.length > 0){
+    if(storedCities.length > 0){                       //Display Last searched city weather details
         var lastSearchCity = storedCities[storedCities.length-1]
         currrentWeather(lastSearchCity)
     }
 
-    $.each(storedCities,function(index, value){
+    $.each(storedCities,function(index, value){       //Adding searched city in list
         $(".cityList").append("<li class='list-group-item'>"+value+"</li>")
     })
       
-  $(".cityList li").click(function(e){           //Selecting city from the list
+    // Event listener----Selecting city from the list
+
+    $(".cityList li").click(function(e){             
       var selectedCity = $(e.target).text()
-    currrentWeather(selectedCity)
-  })
+      currrentWeather(selectedCity)
+    })
     
-    //search Button
-    $("#searchButton").click(function(){     //Getting searhbox value
+    //Search Button
+    $("#searchButton").click(function(){              //Getting searhbox value
         var search = $("#citySearch").val()   
-        if (search == ''){                  //checking searhbox value is empty     
+        if (search == ''){                            //Checking searhbox value is empty     
             return
         }
         $("#citySearch").val('')
@@ -42,31 +46,30 @@ $(document).ready (function(){
         })
         .then(function(data) { 
             // console.log(data)
-            // var temperature = data.main.temp
-            // temperature = (temperature - 273.15) * 1.80 + 32;
+            
             if(data.cod != 200){
                 $(".alert").removeClass("d-none")
             } else {
                 $(".alert").addClass("d-none")
                 //check searchbox value is present in localstorag(storecities)
                 var cityExist = storedCities.find(function(city){      
-                    // console.log(city)
+                    console.log(city)
                     return city.toLowerCase() == cityName.toLowerCase()
                 })
 
-                if(!cityExist) {
+                if(!cityExist) {              //City not exist append into list
                     storedCities.push(cityName)
                     $(".cityList").append("<li class='list-group-item'>"+cityName+"</li>")
                     localStorage.setItem('cities', JSON.stringify(storedCities))
                 }
 
                 var temp = fahrenheit(data.main.temp)
-                $(".currCityName").text(data.name +' ('+moment().format('l')+')')
+                $(".currCityName").html(`${data.name} ( ${moment().format('l')})  <img class="mb-2" src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" width="40" height="40" alt="Icon"/>`)
                 $("#temp").text(temp)
                 $("#humidity").text(data.main.humidity)
                 $("#windSpeed").text(data.wind.speed)
-                latitude=data.coord.lat
-                longitude=data.coord.lon
+                latitude=data.coord.lat;
+                longitude=data.coord.lon;
                 uvIndex()
                 foreCast(cityName)
                 $("#currWeather").removeClass('d-none')
@@ -78,18 +81,27 @@ $(document).ready (function(){
     //function UV
     function uvIndex(){
         var url= "http://api.openweathermap.org/data/2.5/uvi?lat="+latitude+"&lon="+longitude+APIKey
-        console.log(url,latitude,longitude)
+        //console.log(url,latitude,longitude)
         fetch(url)
         .then(function(response) { 
             return response.json()
         })
         .then(function(data) { 
             // console.log(data)
-            $("#uvIndex").text(data.value)
+            $("#uvIndex").removeClass("green yellow red")
+            if(data.value <= 3){
+                $("#uvIndex").text(data.value).addClass("green")
+            }
+            else if (data.value > 3  && data.value <= 7) {
+                $("#uvIndex").text(data.value).addClass("yellow")
+            } else{
+                $("#uvIndex").text(data.value).addClass("red")
+            }
+
         });
     }
 
-    //function forecast cards
+    //Function forecast cards
     function foreCast(cityName){
         var url= "http://api.openweathermap.org/data/2.5/forecast?q="+cityName+APIKey
         fetch(url)
@@ -109,10 +121,10 @@ $(document).ready (function(){
                 var temp = fahrenheit(forecast.main.temp)
                 var cardDate = moment(forecast.dt_txt).format('l');
 
-                $(".forecast").append(
+                $(".forecast").append(                   // 5 days forecast card details
                 `<div class='card bg-primary text-white m-3 p-3 '>
                     <div class='card-text date font-weight-bold mb-2'>${cardDate}</div>
-                    <img class="mb-2" src="123.png" width="40" height="40" alt="Icon"/>
+                    <img class="mb-2" src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" width="40" height="40" alt="Icon"/>
                     <div class='card-text temperature mb-2'>Temp: ${temp} °F</div>
                     <div class='card-text humidity'>Humidity: ${forecast.main.humidity}%</div>
                 </div>`)
@@ -120,9 +132,12 @@ $(document).ready (function(){
         });
     }
 
-    //fahrenheit conversion
+    //Fahrenheit conversion
     function fahrenheit(temperature){
+        // var temperature = data.main.temp
+        // temperature = (temperature - 273.15) * 1.80 + 32;
         return ((temperature - 273.15) * 1.80 + 32).toFixed(1);
+        
     }
 
 });
